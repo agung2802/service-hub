@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user_info {
+  id           Int        @default(autoincrement()) @id
+  first_name   String 
+  last_name    String?
+  email        String     @unique
+  password     String
+  role         Boolean 
+  created_at   DateTime   @default(now())  // Automatically set when the record is created
+  updated_at   DateTime   @updatedAt       // Automatically updates when the record is modified
+
+}
+
+model job {
+  id              Int        @default(autoincrement()) @id
+  user_id         Int
+  job_name        String
+  cleaning_time   Int
+  address         String?
+  description     String?
+  price           Int
+  created_at      DateTime   @default(now())  // Automatically set when the record is created
+  updated_at      DateTime   @updatedAt       // Automatically updates when the record is modified
+
+}
+
+model rating {
+  id          Int        @default(autoincrement()) @id
+  user_id     Int
+  star        Float
+  message     String?
+  created_at  DateTime   @default(now())  // Automatically set when the record is created
+  updated_at  DateTime   @updatedAt       // Automatically updates when the record is modified
+
+}
+
+model order{
+  id            Int      @default(autoincrement()) @id
+  job_id        Int
+  user_id       Int
+  total_hour    Int
+  total_price   Int
+  address       String
+  payment       String?
+  created_at    DateTime @default(now())  // Automatically set when the record is created
+  updated_at    DateTime @updatedAt       // Automatically updates when the record is modified
+}
+
+// model Post {
+//   id        Int      @default(autoincrement()) @id
+//   title     String
+//   content   String?
+//   published Boolean? @default(false)
+//   author    User?    @relation(fields: [authorId], references: [id])
+//   authorId  Int?
+// }
