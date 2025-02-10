@@ -26,19 +26,19 @@ export class OrderService {
   }
 
   update(
-    id: Prisma.orderWhereUniqueInput,
+    idOrder: Prisma.orderWhereUniqueInput,
     updateOrderDto: Prisma.orderUpdateInput,
   ) {
-    return this.prisma.order.update({ where: id, data: updateOrderDto });
+    return this.prisma.order.update({ where: {id: Number(idOrder)}, data: updateOrderDto });
   }
 
-  remove(id: Prisma.orderWhereUniqueInput) {
-    return this.prisma.order.delete({ where: id });
+  remove(idOrder: Prisma.orderWhereUniqueInput) {
+    return this.prisma.order.delete({ where: {id: Number(idOrder)} });
   }
 
   async cart(cartDto: Cart) {
     console.log(cartDto)
-    const cartData = await this.prisma.order.findFirst({ 
+    const cartData = await this.prisma.order.findMany({ 
       where: {
         user_id: {
           equals: cartDto.userId

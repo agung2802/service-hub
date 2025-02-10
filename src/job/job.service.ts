@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateJobDto } from './dto/create-job.dto';
-import { UpdateJobDto } from './dto/update-job.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class JobService {
@@ -30,8 +28,8 @@ export class JobService {
     });
   }
 
-  findOne(id: Prisma.jobWhereUniqueInput) {
-    return this.prisma.job.findUnique({ where: id });
+  findOne(idJob: Prisma.jobWhereUniqueInput) {
+    return this.prisma.job.findUnique({ where: { id: Number(idJob) } });
   }
 
   update(id: Prisma.jobWhereUniqueInput, updateJobDto: Prisma.jobUpdateInput) {

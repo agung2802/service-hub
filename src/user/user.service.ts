@@ -29,12 +29,12 @@ export class UserService {
          });
       }
     
-      update(id: Prisma.user_infoWhereUniqueInput, updateuserDto: Prisma.user_infoUpdateInput) {
-        return this.prisma.user_info.update({ where: id, data: updateuserDto });
+      update(idUser: Prisma.user_infoWhereUniqueInput, updateuserDto: Prisma.user_infoUpdateInput) {
+        return this.prisma.user_info.update({ where: {id: Number(idUser)}, data: updateuserDto });
       }
     
-      remove(id: Prisma.user_infoWhereUniqueInput) {
-        return this.prisma.user_info.delete({ where: id });
+      remove(idUser: Prisma.user_infoWhereUniqueInput) {
+        return this.prisma.user_info.delete({ where: {id: Number(idUser)} });
       }
 
       async login(loginDto: Prisma.user_infoWhereInput) {
