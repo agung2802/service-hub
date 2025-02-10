@@ -1,8 +1,8 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { Cart } from './entities/cart.entity';
 
 @Injectable()
 export class OrderService {
@@ -25,11 +25,41 @@ export class OrderService {
     return this.prisma.order.findUnique({ where: id });
   }
 
-  update(id: Prisma.orderWhereUniqueInput, updateOrderDto: Prisma.orderUpdateInput) {
+  update(
+    id: Prisma.orderWhereUniqueInput,
+    updateOrderDto: Prisma.orderUpdateInput,
+  ) {
     return this.prisma.order.update({ where: id, data: updateOrderDto });
   }
 
   remove(id: Prisma.orderWhereUniqueInput) {
     return this.prisma.order.delete({ where: id });
+  }
+
+  async cart(cartDto: Cart) {
+    console.log(cartDto)
+    const cartData = await this.prisma.order.findFirst({ 
+      where: {
+        user_id: {
+          equals: cartDto.userId
+        },
+        AND: {
+          status: {
+            equals: cartDto.status
+          }
+        }
+        
+      },
+    });
+    if (!cartData) {
+      return {
+        status: 404,
+        error: 'cart empty found',
+      };
+    }
+    return {
+      status: 200,
+      data: cartData,
+    };
   }
 }

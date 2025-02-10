@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+/* eslint-disable prettier/prettier */
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { User } from './entities/user.entity';
+import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
@@ -39,8 +39,8 @@ export class UserController {
       return this.userService.remove(id);
     }
 
-    @Post('login')
-    login(@Body() loginDto: Prisma.user_infoWhereInput) {
+    @Post('/login')
+    login(@Body() loginDto: User) {
       return this.userService.login(loginDto);
     }
   }

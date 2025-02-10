@@ -1,8 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { OrderService } from './order.service';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { Cart } from './entities/cart.entity';
+import { OrderService } from './order.service';
 
 @Controller('order')
 export class OrderController {
@@ -40,4 +39,10 @@ export class OrderController {
   remove(@Param('id') id: Prisma.orderWhereUniqueInput) {
     return this.orderService.remove(id);
   }
+
+  @Post('cart')
+  getCart(@Body() cartDto: Cart) {
+    return this.orderService.cart(cartDto);
+  }
+  
 }

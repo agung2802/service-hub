@@ -56,6 +56,7 @@ model order{
   total_price   Int
   address       String
   payment       String?
+  status        String?
   created_at    DateTime @default(now())  // Automatically set when the record is created
   updated_at    DateTime @updatedAt       // Automatically updates when the record is modified
 }

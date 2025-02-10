@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -19,8 +20,13 @@ export class UserService {
         return this.prisma.user_info.findMany({ ...params });
       }
     
-      findOne(id: Prisma.user_infoWhereUniqueInput) {
-        return this.prisma.user_info.findUnique({ where: id });
+      findOne(idUser: any) {
+        console.log(idUser);
+        return this.prisma.user_info.findUnique({ where: 
+          {
+            id: Number(idUser),
+          }
+         });
       }
     
       update(id: Prisma.user_infoWhereUniqueInput, updateuserDto: Prisma.user_infoUpdateInput) {
