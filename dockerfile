@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
+RUN npx prisma generate --schema=prisma/schema.prisma
+
 RUN npm run build
 
 CMD [ "node", "dist/main" ]
